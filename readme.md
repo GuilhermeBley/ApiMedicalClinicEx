@@ -7,4 +7,5 @@ Use concepts of:
 - Utilizar Cors
 - Swagger
 - OData
+- Roles and Claims
 - Theme: Medical Clinic
