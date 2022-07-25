@@ -3,6 +3,7 @@ using System;
 using ApiMedicalClinicEx.Server.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Server.Migrations
 {
     [DbContext(typeof(AppClinicContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20220725233916_ClinicTables")]
+    partial class ClinicTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,40 +70,6 @@ namespace Server.Migrations
                     b.ToTable("BloodTypes");
 
                     MySqlEntityTypeBuilderExtensions.HasCharSet(b, "latin1");
-
-                    b.HasData(
-                        new
-                        {
-                            Desc = "O-"
-                        },
-                        new
-                        {
-                            Desc = "O+"
-                        },
-                        new
-                        {
-                            Desc = "A-"
-                        },
-                        new
-                        {
-                            Desc = "A+"
-                        },
-                        new
-                        {
-                            Desc = "B-"
-                        },
-                        new
-                        {
-                            Desc = "B+"
-                        },
-                        new
-                        {
-                            Desc = "AB-"
-                        },
-                        new
-                        {
-                            Desc = "AB+"
-                        });
                 });
 
             modelBuilder.Entity("ApiMedicalClinicEx.Server.Context.Model.Patient", b =>

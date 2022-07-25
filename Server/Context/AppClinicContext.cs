@@ -10,6 +10,11 @@ internal class AppClinicContext : IdentityDbContext<User, Role, int,
 {
     private readonly IConfiguration _config;
 
+    public DbSet<Patient> Patients { get; set; } = null!;
+    public DbSet<BloodType> BloodTypes { get; set; } = null!;
+    public DbSet<PatientAllergy> PatientAllergys { get; set; } = null!;
+    public DbSet<Appointment> Appointments { get; set; } = null!;
+
     public AppClinicContext(IConfiguration config)
     {
         _config = config;
@@ -37,6 +42,23 @@ internal class AppClinicContext : IdentityDbContext<User, Role, int,
         builder.Entity<RoleClaim>().HasCharSet("latin1");
         builder.Entity<UserRole>().HasCharSet("latin1");
         builder.Entity<UserClaim>().HasCharSet("latin1");
+
+        // Clinic tables
+        builder.Entity<Patient>().HasCharSet("latin1");
+        builder.Entity<BloodType>().HasCharSet("latin1");
+        builder.Entity<PatientAllergy>().HasCharSet("latin1");
+        builder.Entity<Appointment>().HasCharSet("latin1");
+
+
+        // Add data
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="O-"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="O+"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="A-"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="A+"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="B-"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="B+"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="AB-"});
+        builder.Entity<BloodType>().HasData(new BloodType{Desc="AB+"});
 
         base.OnModelCreating(builder);
     }
