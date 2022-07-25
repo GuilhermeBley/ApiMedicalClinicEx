@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ApiMedicalClinicEx.Server.Context.Model;
 
 /// <summary>
-/// Principal Users
+/// Principal Users, supports only medics users
 /// </summary>
 public class User : IdentityUser<int>
 {
