@@ -11,4 +11,4 @@ Use concepts of:
 - Theme: Medical Clinic
 
 ## Data Relatioship
-![Clinical Medic  (1)](https://user-images.githubusercontent.com/69880922/180873351-da7be91e-44b3-4ac0-95fe-6520da7abb22.png)
+![Clinical Medic  (2)](https://user-images.githubusercontent.com/69880922/180882451-4ac9ac90-ad60-4796-a575-13492986a8b7.png)
