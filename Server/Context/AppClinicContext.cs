@@ -22,7 +22,7 @@ internal class AppClinicContext : IdentityDbContext<User, Role, int,
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
         base.OnConfiguring(optionsBuilder);
-
+        
         optionsBuilder.UseMySql(
             _config.GetConnectionString("Clinic"),
             ServerVersion.AutoDetect(_config.GetConnectionString("Clinic"))
