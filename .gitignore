@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Dont show acess blob
-*appsettings.json
+*appsettings.Development.json

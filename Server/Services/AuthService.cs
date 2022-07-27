@@ -9,7 +9,7 @@ namespace ApiMedicalClinicEx.Server.Services;
 
 public interface IAuthService
 {
-    AuthModel GetToken(User user, IEnumerable<Claim> Claims);
+    AuthModel GetToken(User user, IEnumerable<Claim> Claims = null!);
 
 }   
 
