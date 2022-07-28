@@ -9,6 +9,9 @@ namespace ApiMedicalClinicEx.Server.Context.Model;
 /// </summary>
 public class User : IdentityUser<int>
 {
-    [Required, Column(TypeName = "varchar(100)")]
+    [Required, Column(TypeName = "varchar(36)")]
     public string IdDoctor { get; set; } = string.Empty;
+    
+    [Required, Column(TypeName = "varchar(100)")]
+    public string Name { get; set; } = string.Empty;
 }

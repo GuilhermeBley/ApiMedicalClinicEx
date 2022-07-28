@@ -42,6 +42,11 @@ builder.Services.AddIdentity<User,Role>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 
+    // Sign
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+
     // Lockout settings.
     options.Lockout.DefaultLockoutTimeSpan = System.TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;

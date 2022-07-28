@@ -49,7 +49,6 @@ internal class AppClinicContext : IdentityDbContext<User, Role, int,
         builder.Entity<PatientAllergy>().HasCharSet("latin1");
         builder.Entity<Appointment>().HasCharSet("latin1");
 
-
         // Add data
         builder.Entity<BloodType>().HasData(new BloodType{Desc="O-"});
         builder.Entity<BloodType>().HasData(new BloodType{Desc="O+"});
