@@ -48,7 +48,9 @@ public class LoginController : ControllerBase
 
         if (result.Succeeded)
         {
-            return Ok(_authService.GetToken(user));
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            return Ok(_authService.GetToken(user, claims));
         }
         else
         {
@@ -70,7 +72,7 @@ public class LoginController : ControllerBase
 
             var user = new User { 
                 Email = userCreate.Email,
-                UserName = userCreate.Nome,
+                UserName = userCreate.Email,
                 NormalizedUserName = userCreate.Email,
                 IdDoctor = Guid.NewGuid().ToString(),
                 PhoneNumber = userCreate.Phone 
@@ -82,7 +84,12 @@ public class LoginController : ControllerBase
             {
                 user = await _userManager.FindByEmailAsync(userCreate.Email);
 
-                return Ok(_authService.GetToken(user));
+                if (user is null)
+                    return BadRequest("Falha ao criar usuário.");
+
+                var claims = await _userManager.GetClaimsAsync(user);
+
+                return Ok(_authService.GetToken(user, claims));
             }
             else
             {
