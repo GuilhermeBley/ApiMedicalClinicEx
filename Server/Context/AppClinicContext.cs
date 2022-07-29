@@ -5,7 +5,7 @@ using Pomelo.EntityFrameworkCore.MySql;
 
 namespace ApiMedicalClinicEx.Server.Context;
 
-internal class AppClinicContext : IdentityDbContext<User, Role, int,
+public class AppClinicContext : IdentityDbContext<User, Role, int,
                                             UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
     private readonly IConfiguration _config;
