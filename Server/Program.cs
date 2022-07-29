@@ -1,4 +1,6 @@
 using ApiMedicalClinicEx.Server.Context;
+using ApiMedicalClinicEx.Server.Policies;
+using ApiMedicalClinicEx.Server.Extension;
 using ApiMedicalClinicEx.Server.Context.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,14 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenWithConfig();
 
 #region Add Services
 
 builder.Services
     .AddSingleton<IConfiguration>(builder.Configuration)
     .AddScoped<IAuthService, AuthService>();
-    
+
 #endregion
 
 #region Context
@@ -30,7 +32,7 @@ builder.Services.AddDbContext<AppClinicContext>();
 
 #region Identity
 
-builder.Services.AddIdentity<User,Role>(options =>
+builder.Services.AddIdentity<User, Role>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 
@@ -64,7 +66,7 @@ builder.Services.AddIdentity<User,Role>(options =>
 
 #endregion
 
-#region AuthJwt
+#region Authentication
 
 var key = System.Text.Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
 
@@ -89,6 +91,17 @@ builder.Services
             ValidateAudience = false
         };
     });
+
+#endregion
+
+#region Authorization
+
+builder.Services.AddAuthorization(
+    options =>
+    {
+        options.AddPolicy(DefaultPolicies.PolicyAdm, police => police.RequireRole(DefaultPolicies.RoleAdm));
+    }
+);
 
 #endregion
 
