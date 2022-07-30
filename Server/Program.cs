@@ -1,5 +1,5 @@
 using ApiMedicalClinicEx.Server.Context;
-using ApiMedicalClinicEx.Server.Policies;
+using ApiMedicalClinicEx.Server.Identity;
 using ApiMedicalClinicEx.Server.Extension;
 using ApiMedicalClinicEx.Server.Context.Model;
 using Microsoft.AspNetCore.Identity;

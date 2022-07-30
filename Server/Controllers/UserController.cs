@@ -1,8 +1,11 @@
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Model;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ApiMedicalClinicEx.Server.Attributes;
+using ApiMedicalClinicEx.Server.Identity;
+using System.Security.Claims;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -15,6 +18,18 @@ public class UserController : ControllerBase
     {
         _userManager = userManager;
     }
+
+    #region Users Emails
+
+    [HttpGet, ClaimsAuthorize(DefaultClaimTypes.Access,"viewUsers")]
+    public async Task<ActionResult<IEnumerable<string>>> GetUsersEmail()
+    {
+        return Ok(
+            (await _userManager.Users.ToListAsync()).Select(s => s.Email)
+        );
+    }
+
+    #endregion
 
     #region User Roles
 

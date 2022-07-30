@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using ApiMedicalClinicEx.Server.Context;
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Filter;
 using ApiMedicalClinicEx.Server.Model;
-using ApiMedicalClinicEx.Server.Policies;
-using ApiMedicalClinicEx.Server.Services;
+using ApiMedicalClinicEx.Server.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
