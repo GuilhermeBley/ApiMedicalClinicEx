@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ApiMedicalClinicEx.Server.Services;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,8 @@ builder.Services.AddSwaggerGenWithConfig();
 
 builder.Services
     .AddSingleton<IConfiguration>(builder.Configuration)
-    .AddScoped<IAuthService, AuthService>();
+    .AddScoped<IAuthService, AuthService>()
+    .AddScoped<IBloodTypesService, BloodTypesService>();
 
 #endregion
 
@@ -102,6 +104,12 @@ builder.Services.AddAuthorization(
         options.AddPolicy(DefaultPolicies.PolicyAdm, police => police.RequireRole(DefaultPolicies.RoleAdm));
     }
 );
+
+#endregion
+
+#region Mapper
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 #endregion
 

@@ -10,28 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiMedicalClinicEx.Server.Controllers;
 
 [ApiController, Route("api/[controller]")]
-public class PatientController : ControllerBase
+public class AppointmentController : ControllerBase
 {
     private readonly AppClinicContext _context;
-    private readonly IBloodTypesService _bloodTypesService;
 
-    public PatientController(AppClinicContext context, IBloodTypesService bloodTypesService)
+    public AppointmentController(AppClinicContext context)
     {
         _context = context;
-        _bloodTypesService = bloodTypesService;
     }
-
-    #region Patients
-
-    [HttpGet("Patients")]
-    public async Task<ActionResult<IEnumerable<PatientModel>>> GetPatients()
-    {
-        await Task.CompletedTask;
-        return Ok();
-    }
-
-    #endregion
-
-    #region  Allergys
-    #endregion
 }
