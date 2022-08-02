@@ -22,7 +22,9 @@ builder.Services.AddSwaggerGenWithConfig();
 builder.Services
     .AddSingleton<IConfiguration>(builder.Configuration)
     .AddScoped<IAuthService, AuthService>()
-    .AddScoped<IBloodTypesService, BloodTypesService>();
+    .AddSingleton<IBloodTypesService, BloodTypesService>()
+    .AddScoped<IPatientService, PatientService>()
+    .AddScoped<IAppointmentService, AppointmentService>();
 
 #endregion
 
