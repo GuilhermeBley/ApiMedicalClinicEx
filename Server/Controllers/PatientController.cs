@@ -32,7 +32,9 @@ public class PatientController : ControllerBase
 
         try
         {
-            response = await _patientService.GetPatientsAsync();
+            response = _mapper.Map<IEnumerable<PatientModel>>(
+                await _patientService.GetPatientsAsync()
+            );
         }
         catch
         {
