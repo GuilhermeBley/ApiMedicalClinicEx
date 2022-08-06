@@ -9,6 +9,7 @@ public class PatternProfile : Profile
 {
     public PatternProfile() : base()
     {
-        CreateMap<Patient, PatientModel>();
+        CreateMap<Patient, PatientModel>().ReverseMap();
+        CreateMap<PatientAllergy, PatientAllergyModel>().ReverseMap();
     }
 }

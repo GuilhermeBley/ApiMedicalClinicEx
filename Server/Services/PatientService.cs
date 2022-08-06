@@ -9,6 +9,7 @@ namespace ApiMedicalClinicEx.Server.Services;
 public interface IPatientService
 {
     Task<IEnumerable<Patient>> GetPatientsAsync();
+    Task<Patient?> GetPatientsAsync(string cpf);
     Task AddPatientAsync(Patient patient);
     Task RemovePatientAsync(string idPatient);
     Task UpdatePatientAsync(string idPatient, Patient patient);
@@ -96,6 +97,13 @@ public class PatientService : IPatientService
     {
         return await _context.Patients.AsNoTracking().ToListAsync();
 
+    }
+
+    public async Task<Patient?> GetPatientsAsync(string cpf)
+    {
+        var response = await TryGetPatient(cpf);
+
+        return response.patient;
     }
 
     public async Task RemoveAllergyPatientAsync(string idPatient, string desc)
@@ -204,7 +212,7 @@ public class PatientService : IPatientService
 
     private async Task<(bool hasPatient, ApiMedicalClinicEx.Server.Context.Model.Patient? patient)> TryGetPatient(string idCpf)
     {
-        var patient = await _context.Patients.FirstOrDefaultAsync(f => f.Cpf!.Equals(idCpf));
+        var patient = await _context.Patients.AsNoTracking().FirstOrDefaultAsync(f => f.Cpf!.Equals(idCpf));
 
         if (patient is null)
             return (false, patient);
