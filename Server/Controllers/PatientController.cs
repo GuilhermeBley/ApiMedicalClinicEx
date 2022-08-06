@@ -25,7 +25,7 @@ public class PatientController : ControllerBase
 
     #region Patient
 
-    [HttpGet("Patient")]
+    [HttpGet()]
     public async Task<ActionResult<IEnumerable<PatientModel>>> GetPatients()
     {
         IEnumerable<PatientModel> response;
@@ -47,7 +47,7 @@ public class PatientController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("Patient/{cpf}")]
+    [HttpGet("{cpf}")]
     public async Task<ActionResult<PatientModel>> GetPatients(string cpf)
     {
         try
@@ -64,7 +64,7 @@ public class PatientController : ControllerBase
         }
     }
 
-    [HttpPost("Patient")]
+    [HttpPost()]
     public async Task<ActionResult> PostPacient([FromBody] PatientModel patientModel)
     {
         try
@@ -79,7 +79,7 @@ public class PatientController : ControllerBase
         return Created($"/Patients/{patientModel.Cpf}", patientModel);
     }
 
-    [HttpPut("Patient/{cpf}")]
+    [HttpPut("{cpf}")]
     public async Task<ActionResult> PutPatient(string cpf, [FromBody] PatientModel patientModel)
     {
         try
@@ -97,7 +97,7 @@ public class PatientController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("Patient/{cpf}")]
+    [HttpDelete("{cpf}")]
     public async Task<ActionResult> DeletePatient(string cpf)
     {
         try

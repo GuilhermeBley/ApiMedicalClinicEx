@@ -11,5 +11,6 @@ public class PatternProfile : Profile
     {
         CreateMap<Patient, PatientModel>().ReverseMap();
         CreateMap<PatientAllergy, PatientAllergyModel>().ReverseMap();
+        CreateMap<Appointment, AppointmentModel>().ReverseMap();
     }
 }
