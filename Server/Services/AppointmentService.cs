@@ -5,13 +5,55 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiMedicalClinicEx.Server.Services;
 
+/// <summary>
+/// Manage appointments
+/// </summary>
 public interface IAppointmentService
 {
+    /// <summary>
+    /// Get doctor Appointments
+    /// </summary>
+    /// <param name="idDoctor">identifier doctor</param>
+    /// <returns>list of appointment</returns>
     Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(string idDoctor);
+
+    /// <summary>
+    /// Get patient Appointments
+    /// </summary>
+    /// <param name="patient">identifier patient</param>
+    /// <returns>list of appointment</returns>
     Task<IEnumerable<Appointment>> GetAppointmentsPatientAsync(string patient);
+
+    /// <summary>
+    /// Get Appointments per date
+    /// </summary>
+    /// <param name="date">after date</param>
+    /// <returns>list of appointment</returns>
     Task<IEnumerable<Appointment>> GetAppointmentsAfterDateAsync(DateTime date);
+
+    /// <summary>
+    /// add new appointment
+    /// </summary>
+    /// <param name="appointment">object context to add</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="BusinessRulesException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task AddAppointmentAsync(Appointment appointment);
+
+    /// <summary>
+    /// remove appointment
+    /// </summary>
+    /// <param name="idAppointment">identifier</param>
     Task RemoveAppointmentAsync(int idAppointment);
+
+    /// <summary>
+    /// update appointment
+    /// </summary>
+    /// <param name="idAppointment">id</param>
+    /// <param name="appointment">object</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="BusinessRulesException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task UpdateAppointmentAsync(int idAppointment, Appointment appointment);
 }
 
@@ -24,6 +66,7 @@ public class AppointmentService : IAppointmentService
         _context = context;
     }
 
+    /// <inheritdoc/>
     public async Task AddAppointmentAsync(Appointment appointment)
     {
         await ValidAppointment(appointment);
@@ -43,21 +86,26 @@ public class AppointmentService : IAppointmentService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<IEnumerable<Appointment>> GetAppointmentsAfterDateAsync(DateTime date)
     {
         return (await _context.Appointments.AsNoTracking().ToListAsync()).Where(appointment => appointment.DateAppo < date);
     }
 
+    /// <inheritdoc/>
     public async Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(string idDoctor)
     {
         return (await _context.Appointments.AsNoTracking().ToListAsync()).Where(appointment => appointment.Medic.Equals(idDoctor));
     }
 
+    /// <inheritdoc/>
     public async Task<IEnumerable<Appointment>> GetAppointmentsPatientAsync(string patient)
     {
         return (await _context.Appointments.AsNoTracking().ToListAsync()).Where(appointment => appointment.Patient!.Equals(patient));
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="NotFoundException"></exception>
     public async Task RemoveAppointmentAsync(int idAppointment)
     {
         var appointment = await _context.Appointments.FirstOrDefaultAsync(f => f.Id == idAppointment);
@@ -80,6 +128,9 @@ public class AppointmentService : IAppointmentService
         }
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task UpdateAppointmentAsync(int idAppointment, Appointment appointment)
     {
         if (appointment is null || appointment.Id != idAppointment)
@@ -108,6 +159,13 @@ public class AppointmentService : IAppointmentService
         }
     }
 
+    /// <summary>
+    /// async validation appointments
+    /// </summary>
+    /// <param name="appointment">appointment to validation</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="BusinessRulesException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     private async Task ValidAppointment(Appointment appointment)
     {
         if (appointment is null)

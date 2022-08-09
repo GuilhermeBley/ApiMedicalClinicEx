@@ -1,22 +1,85 @@
 using ApiMedicalClinicEx.Server.Context;
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Services.Exceptions;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiMedicalClinicEx.Server.Services;
 
+/// <summary>
+/// Manage patients
+/// </summary>
 public interface IPatientService
 {
+    /// <summary>
+    /// Get list of patients
+    /// </summary>
+    /// <returns>list of patients</returns>
     Task<IEnumerable<Patient>> GetPatientsAsync();
+
+    /// <summary>
+    /// Get unique patient or null
+    /// </summary>
+    /// <returns>patient or null value</returns>
     Task<Patient?> GetPatientsAsync(string cpf);
+
+    /// <summary>
+    /// Add new patient
+    /// </summary>
+    /// <param name="patient">object to add</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ConflictException"></exception>
     Task AddPatientAsync(Patient patient);
+
+    /// <summary>
+    /// remove existing patient
+    /// </summary>
+    /// <param name="idPatient">identifier</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task RemovePatientAsync(string idPatient);
+
+    /// <summary>
+    /// update patient
+    /// </summary>
+    /// <param name="idPatient">patient identifier</param>
+    /// <param name="patient">object to update</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task UpdatePatientAsync(string idPatient, Patient patient);
 
+    /// <summary>
+    /// Add new allergy to patient
+    /// </summary>
+    /// <param name="idPatient">patient id</param>
+    /// <param name="allergy">allergy to patient</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task AddAllergyPatientAsync(string idPatient, PatientAllergy allergy);
+
+    /// <summary>
+    /// Remove allergy from patient
+    /// </summary>
+    /// <param name="idPatient">patient id</param>
+    /// <param name="desc">description allergy</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task RemoveAllergyPatientAsync(string idPatient, string desc);
+
+    /// <summary>
+    /// Remove allergy from patient
+    /// </summary>
+    /// <param name="idPatient">patient id</param>
+    /// <param name="idAllergy">id allergy</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task RemoveAllergyPatientAsync(string idPatient, int idAllergy);
+
+    /// <summary>
+    /// get allergys from patient
+    /// </summary>
+    /// <param name="idPatient">patient identifier</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     Task<IEnumerable<PatientAllergy>> GetAllergysAsync(string idPatient);
 }
 
@@ -31,6 +94,9 @@ public class PatientService : IPatientService
         _bloodTypesService = bloodTypesService;
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task AddAllergyPatientAsync(string idPatient, PatientAllergy allergy)
     {
         if (allergy is null || string.IsNullOrEmpty(idPatient) || string.IsNullOrEmpty(allergy.Cpf))
@@ -57,6 +123,9 @@ public class PatientService : IPatientService
 
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ConflictException"></exception>
     public async Task AddPatientAsync(Patient patient)
     {
         if (patient is null)
@@ -80,6 +149,9 @@ public class PatientService : IPatientService
         }
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task<IEnumerable<PatientAllergy>> GetAllergysAsync(string idPatient)
     {
         if (string.IsNullOrEmpty(idPatient))
@@ -93,12 +165,16 @@ public class PatientService : IPatientService
         return (await _context.PatientAllergys.AsNoTracking().ToListAsync()).Where(allergy => allergy.Cpf!.Equals(idPatient));
     }
 
+    /// <inheritdoc/>
     public async Task<IEnumerable<Patient>> GetPatientsAsync()
     {
         return await _context.Patients.AsNoTracking().ToListAsync();
 
     }
 
+    /// <inheritdoc/>
+    /// <param name="cpf"></param>
+    /// <returns></returns>
     public async Task<Patient?> GetPatientsAsync(string cpf)
     {
         var response = await TryGetPatient(cpf);
@@ -106,6 +182,9 @@ public class PatientService : IPatientService
         return response.patient;
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task RemoveAllergyPatientAsync(string idPatient, string desc)
     {
         if (string.IsNullOrEmpty(idPatient) || string.IsNullOrEmpty(desc))
@@ -131,6 +210,9 @@ public class PatientService : IPatientService
         }
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task RemoveAllergyPatientAsync(string idPatient, int idAllergy)
     {
         if (string.IsNullOrEmpty(idPatient) || idAllergy < 1)
@@ -156,6 +238,9 @@ public class PatientService : IPatientService
         }
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task RemovePatientAsync(string idPatient)
     {
         if (string.IsNullOrEmpty(idPatient))
@@ -184,6 +269,9 @@ public class PatientService : IPatientService
         }
     }
 
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="NotFoundException"></exception>
     public async Task UpdatePatientAsync(string idPatient, Patient patient)
     {
         if (string.IsNullOrEmpty(idPatient) || string.IsNullOrEmpty(patient.Cpf) || idPatient != patient.Cpf)

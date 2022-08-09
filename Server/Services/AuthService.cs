@@ -7,8 +7,17 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ApiMedicalClinicEx.Server.Services;
 
+/// <summary>
+/// Authentication service, provides token
+/// </summary>
 public interface IAuthService
 {
+    /// <summary>
+    /// Gets Token login
+    /// </summary>
+    /// <param name="user">user</param>
+    /// <param name="Claims">user claims to add in token</param>
+    /// <returns>AuthModel</returns>
     AuthModel GetToken(User user, IEnumerable<Claim> Claims = null!);
 
 }   
@@ -22,6 +31,7 @@ internal class AuthService : IAuthService
         _Configuration = configuration;
     }
 
+    /// <inheritdoc/>
     public AuthModel GetToken(User user, IEnumerable<Claim> Claims = null!)
     {
         if (Claims is null)
