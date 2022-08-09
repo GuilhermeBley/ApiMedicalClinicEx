@@ -4,11 +4,11 @@ using ApiMedicalClinicEx.Server.Services.Exceptions;
 using ApiMedicalClinicEx.Server.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
-[ApiController, Route("api/[controller]")]
+[Authorize, ApiController, Route("api/[controller]")]
 public class AppointmentController : ControllerBase
 {
     private readonly IAppointmentService _appointService;

@@ -3,11 +3,12 @@ using ApiMedicalClinicEx.Server.Model;
 using ApiMedicalClinicEx.Server.Services;
 using ApiMedicalClinicEx.Server.Services.Exceptions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
-[ApiController, Route("api/[controller]")]
+[Authorize, ApiController, Route("api/[controller]")]
 public class PatientController : ControllerBase
 {
     private readonly IPatientService _patientService;
