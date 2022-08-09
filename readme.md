@@ -4,7 +4,7 @@ Use concepts of:
 - RestFull
 - DI
 - AutoMapper
-- Utilizar Cors
+- Use Cors
 - Swagger
 - OData
 - Roles and Claims
