@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ApiMedicalClinicEx.Server.Attributes;
 using ApiMedicalClinicEx.Server.Identity;
-using System.Security.Claims;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 

@@ -1,12 +1,10 @@
-using System.Security.Claims;
-using ApiMedicalClinicEx.Server.Context;
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Model;
+using ApiMedicalClinicEx.Server.Services.Exceptions;
 using ApiMedicalClinicEx.Server.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -74,6 +72,10 @@ public class AppointmentController : ControllerBase
         {
             await _appointService.AddAppointmentAsync(_mapper.Map<Appointment>(model));
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha ao inserir nova consulta média.");
@@ -89,6 +91,10 @@ public class AppointmentController : ControllerBase
         {
             await _appointService.UpdateAppointmentAsync(idAppointment, _mapper.Map<Appointment>(model));
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha ao inserir nova consulta média.");
@@ -103,6 +109,10 @@ public class AppointmentController : ControllerBase
         try
         {
             await _appointService.RemoveAppointmentAsync(idAppointment);
+        }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
         }
         catch
         {

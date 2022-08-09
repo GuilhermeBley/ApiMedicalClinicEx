@@ -44,6 +44,7 @@ public interface IAppointmentService
     /// remove appointment
     /// </summary>
     /// <param name="idAppointment">identifier</param>
+    /// <exception cref="NotFoundException"></exception>
     Task RemoveAppointmentAsync(int idAppointment);
 
     /// <summary>

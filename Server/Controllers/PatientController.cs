@@ -1,13 +1,9 @@
-using System.Security.Claims;
-using ApiMedicalClinicEx.Server.Context;
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Model;
 using ApiMedicalClinicEx.Server.Services;
+using ApiMedicalClinicEx.Server.Services.Exceptions;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -71,6 +67,10 @@ public class PatientController : ControllerBase
         {
             await _patientService.AddPatientAsync(_mapper.Map<Patient>(patientModel));
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha ao criar paciente.");
@@ -89,6 +89,10 @@ public class PatientController : ControllerBase
 
             await _patientService.UpdatePatientAsync(cpf, _mapper.Map<Patient>(patientModel));
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha de atualização do paciente.");
@@ -103,6 +107,10 @@ public class PatientController : ControllerBase
         try
         {
             await _patientService.RemovePatientAsync(cpf);
+        }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
         }
         catch
         {
@@ -130,6 +138,10 @@ public class PatientController : ControllerBase
                     _mapper.Map<IEnumerable<PatientAllergyModel>>(await _patientService.GetAllergysAsync(cpf))
                 );
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha na coleta de alergias.");
@@ -148,6 +160,10 @@ public class PatientController : ControllerBase
 
             await _patientService.AddAllergyPatientAsync(model.Cpf!, _mapper.Map<PatientAllergy>(model));
         }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
+        }
         catch
         {
             return BadRequest("Falha ao inserir nova alergia.");
@@ -165,6 +181,10 @@ public class PatientController : ControllerBase
                 return BadRequest("Insira corretamente os valores do cpf e descrição.");
 
             await _patientService.RemoveAllergyPatientAsync(cpf, desc);
+        }
+        catch (ServicesException e)
+        {
+            return StatusCode(e.StatusCode, e.Message);
         }
         catch
         {
