@@ -122,7 +122,7 @@ public class LoginController : ControllerBase
         foreach (var roleName in roles)
         {
             // add role claim
-            claims.Add(new Claim(ClaimTypes.Role, roleName));
+            claims.Add(new Claim(ClaimTypeService.Role, roleName));
 
             var role = await _roleManager.FindByNameAsync(roleName);
 

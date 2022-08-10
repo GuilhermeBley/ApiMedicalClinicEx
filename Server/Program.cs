@@ -21,8 +21,9 @@ builder.Services.AddSwaggerGenWithConfig();
 
 builder.Services
     .AddSingleton<IConfiguration>(builder.Configuration)
-    .AddScoped<IAuthService, AuthService>()
+    .AddSingleton<IClaimTypeService, ClaimTypeService>()
     .AddSingleton<IBloodTypesService, BloodTypesService>()
+    .AddScoped<IAuthService, AuthService>()
     .AddScoped<IPatientService, PatientService>()
     .AddScoped<IAppointmentService, AppointmentService>();
 

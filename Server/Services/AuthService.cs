@@ -51,11 +51,11 @@ internal class AuthService : IAuthService
             // Claims
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(JwtRegisteredClaimNames.Name, user.UserName),
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.IdDoctor),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
+                new Claim(ClaimTypeService.Name, user.UserName),
+                new Claim(ClaimTypeService.NameId, user.Id.ToString()),
+                new Claim(ClaimTypeService.UniqueName, user.IdDoctor),
+                new Claim(ClaimTypeService.Email, user.Email),
+                new Claim(ClaimTypeService.MobilePhone, user.PhoneNumber)
             })
         };
 

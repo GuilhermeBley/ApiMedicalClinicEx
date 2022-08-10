@@ -1,5 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using ApiMedicalClinicEx.Server.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -42,11 +41,11 @@ internal class CurrentlyUserService : ICurrentlyUserService
 
             var claims = tokenHandler.ReadJwtToken(token).Claims;
 
-            var name = claims.FirstOrDefault(predicate => predicate.Type == JwtRegisteredClaimNames.Name);
-            var email = claims.FirstOrDefault(predicate => predicate.Type == JwtRegisteredClaimNames.Email);
-            var medicId = claims.FirstOrDefault(predicate => predicate.Type == JwtRegisteredClaimNames.UniqueName);
-            var identificador = int.TryParse(claims.FirstOrDefault(predicate => predicate.Type == JwtRegisteredClaimNames.NameId)?.Value, out int userId);
-            var phoneNumber = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypes.MobilePhone);
+            var name = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Name);
+            var email = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Email);
+            var medicId = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.UniqueName);
+            var identificador = int.TryParse(claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.NameId)?.Value, out int userId);
+            var phoneNumber = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.MobilePhone);
 
             return new CurrentlyUserModel
             {
