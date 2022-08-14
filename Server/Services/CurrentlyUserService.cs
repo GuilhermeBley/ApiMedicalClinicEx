@@ -12,7 +12,7 @@ public interface ICurrentlyUserService
     CurrentlyUserModel GetUser();
 }
 
-/// <inheritdoc/>
+/// <inheritdoc path="*"/>
 internal class CurrentlyUserService : ICurrentlyUserService
 {
     private CurrentlyUserModel EmptyUser => new();

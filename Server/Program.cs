@@ -1,5 +1,4 @@
 using ApiMedicalClinicEx.Server.Context;
-using ApiMedicalClinicEx.Server.Identity;
 using ApiMedicalClinicEx.Server.Extension;
 using ApiMedicalClinicEx.Server.Context.Model;
 using Microsoft.AspNetCore.Identity;
@@ -104,7 +103,7 @@ builder.Services
 builder.Services.AddAuthorization(
     options =>
     {
-        options.AddPolicy(DefaultPolicies.PolicyAdm, police => police.RequireRole(DefaultPolicies.RoleAdm));
+        options.AddPolicy(ClaimTypeService.Policy.OnlyAdm, police => police.RequireRole(ClaimTypeService.Claim.Admin));
     }
 );
 

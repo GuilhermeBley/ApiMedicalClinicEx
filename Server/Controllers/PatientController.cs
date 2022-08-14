@@ -1,3 +1,4 @@
+using ApiMedicalClinicEx.Server.Attributes;
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Model;
 using ApiMedicalClinicEx.Server.Services;
@@ -103,6 +104,7 @@ public class PatientController : ControllerBase
     }
 
     [HttpDelete("{cpf}")]
+    [Authorize(Roles = ClaimTypeService.Claim.Admin)]
     public async Task<ActionResult> DeletePatient(string cpf)
     {
         try

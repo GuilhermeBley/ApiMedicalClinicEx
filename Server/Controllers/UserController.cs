@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ApiMedicalClinicEx.Server.Attributes;
-using ApiMedicalClinicEx.Server.Identity;
+using ApiMedicalClinicEx.Server.Services;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -20,7 +20,7 @@ public class UserController : ControllerBase
 
     #region Users Emails
 
-    [HttpGet, ClaimsAuthorize(DefaultClaimTypes.Access,"viewUsers")]
+    [HttpGet, ClaimsAuthorize(ClaimTypeService.Acess, "viewUsers")]
     public async Task<ActionResult<IEnumerable<string>>> GetUsersEmail()
     {
         return Ok(

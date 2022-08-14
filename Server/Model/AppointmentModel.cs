@@ -5,9 +5,6 @@ namespace ApiMedicalClinicEx.Server.Model;
 public class AppointmentModel
 {
     [Required]
-    public int Medic { get; set; }
-
-    [Required]
     public string? Patient { get; set; }
 
     [Required]

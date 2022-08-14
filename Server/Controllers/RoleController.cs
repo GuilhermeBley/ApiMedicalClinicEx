@@ -1,7 +1,7 @@
 using ApiMedicalClinicEx.Server.Context.Model;
 using ApiMedicalClinicEx.Server.Filter;
 using ApiMedicalClinicEx.Server.Model;
-using ApiMedicalClinicEx.Server.Identity;
+using ApiMedicalClinicEx.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ApiMedicalClinicEx.Server.Controllers;
 
 [ApiController, Route("api/[controller]")]
-[TypeFilter(typeof(DevOnlyActionFilter))]
-[Authorize(policy:DefaultPolicies.PolicyAdm)]
+[TypeFilter(typeof(DevOnlyActionFilter)), Authorize(policy:ClaimTypeService.Claim.Admin)]
 public class PolicyController : ControllerBase
 {
     private readonly RoleManager<Role> _roleManager;
