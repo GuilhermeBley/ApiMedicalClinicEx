@@ -45,12 +45,18 @@ public class ClaimTypeService : IClaimTypeService
         return this.GetType().GetFields().Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.IsPublic).Select(fi => fi.Name);
     }
 
+    /// <summary>
+    /// Project claims
+    /// </summary>
     public static class Claim
     {
         public const string Admin = "admin";
         public const string Commom = "commom";
     }
 
+    /// <summary>
+    /// Project Policy
+    /// </summary>
     public static class Policy
     {
         public const string OnlyAdm = "onlyadm";
