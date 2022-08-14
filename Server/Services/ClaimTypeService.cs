@@ -55,7 +55,7 @@ public class ClaimTypeService : IClaimTypeService
     }
 
     /// <summary>
-    /// Project Policy
+    /// Project Policies
     /// </summary>
     public static class Policy
     {
