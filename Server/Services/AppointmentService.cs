@@ -61,10 +61,12 @@ public interface IAppointmentService
 public class AppointmentService : IAppointmentService
 {
     private readonly AppClinicContext _context;
+    private readonly ICurrentlyUserService _userService;
 
-    public AppointmentService(AppClinicContext context)
+    public AppointmentService(AppClinicContext context, ICurrentlyUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
     /// <inheritdoc/>
