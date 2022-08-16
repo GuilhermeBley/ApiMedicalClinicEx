@@ -192,11 +192,6 @@ public class AppointmentService : IAppointmentService
             throw new BusinessRulesException($"Data {appointment.DateAppo.ToString("dd/MM/yyyy hh:mm")} inválida. Data deve ser menor que o dia e horário atual.");
         }
 
-        if (await _context.Users.FirstOrDefaultAsync(f => f.Id.Equals(appointment.Medic)) is null)
-        {
-            throw new NotFoundException($"Médico com identificador {appointment.Medic} inexistente.");
-        }
-
         if (await _context.Patients.FirstOrDefaultAsync(f => f.Cpf!.Equals(appointment.Patient)) is null)
         {
             throw new NotFoundException($"Paciente com identificador {appointment.Medic} inexistente.");
