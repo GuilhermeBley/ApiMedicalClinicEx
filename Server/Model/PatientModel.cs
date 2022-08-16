@@ -5,7 +5,7 @@ namespace ApiMedicalClinicEx.Server.Model;
 public class PatientModel
 {
     [Required]
-    [RegularExpression(@"([0-9]{11})", ErrorMessage = "Only CPF numbers. Ex '00011122233'.")]
+    [RegularExpression(@"([0-9]{11})", ErrorMessage = "Insira apenas números ao CPF. Ex '00011122233'.")]
     public string? Cpf { get; set; }
 
     [Required]
