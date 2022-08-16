@@ -74,6 +74,9 @@ public class AppointmentService : IAppointmentService
     {
         await ValidAppointment(appointment);
 
+        var medicUser = _userService.GetUser();
+        appointment.Medic = medicUser.UserId;
+
         using var transaction = _context.Database.BeginTransaction();
         try
         {
@@ -116,6 +119,11 @@ public class AppointmentService : IAppointmentService
         if (appointment is null)
             throw new NotFoundException($"Id {idAppointment}");
 
+        var medicUser = _userService.GetUser();
+
+        if (!appointment.Medic.Equals(medicUser.UserId))
+            throw new BusinessRulesException($"O usuário só deve poder remover a consulta que ele criou.");
+
         using var transaction = _context.Database.BeginTransaction();
         try
         {
@@ -145,6 +153,11 @@ public class AppointmentService : IAppointmentService
 
         if (appointmentDb is null)
             throw new NotFoundException($"Id {idAppointment}");
+
+        var medicUser = _userService.GetUser();
+
+        if (!appointmentDb.Medic.Equals(medicUser.UserId))
+            throw new BusinessRulesException($"Não é possível excluir a consulta {appointmentDb.Id} por conta de que o usuário atual não a adicionou.");
 
         using var transaction = _context.Database.BeginTransaction();
         try

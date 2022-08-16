@@ -24,7 +24,8 @@ builder.Services
     .AddSingleton<IBloodTypesService, BloodTypesService>()
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<IPatientService, PatientService>()
-    .AddScoped<IAppointmentService, AppointmentService>();
+    .AddScoped<IAppointmentService, AppointmentService>()
+    .AddTransient<ICurrentlyUserService, CurrentlyUserService>();
 
 #endregion
 
