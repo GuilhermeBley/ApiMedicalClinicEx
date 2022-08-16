@@ -131,8 +131,15 @@ public class PatientService : IPatientService
         if (patient is null)
             throw new ArgumentException("Arguments null or emptys.");
 
-        if (!(await TryGetPatient(patient.Cpf!)).hasPatient)
+        if ((await TryGetPatient(patient.Cpf!)).hasPatient)
             throw new ConflictException($"Paciente {patient.Cpf} já existe.");
+
+        string? validBlood = null;
+        if (patient.BloodType is not null &&
+            !_bloodTypesService.IsValidBloodType(patient.BloodType, out validBlood))
+            throw new BusinessRulesException($"Tipo de sangue inválido!");
+        if (validBlood is not null)
+            patient.BloodType = validBlood;
 
         using var transaction = _context.Database.BeginTransaction();
         try
@@ -281,6 +288,13 @@ public class PatientService : IPatientService
 
         if (patientDb is null)
             throw new NotFoundException($"Paciente com Id {idPatient} não encontrado.");
+
+        string? validBlood = null;
+        if (patient.BloodType is not null &&
+            !_bloodTypesService.IsValidBloodType(patient.BloodType, out validBlood))
+            throw new BusinessRulesException($"Tipo de sangue inválido!");
+        if (validBlood is not null)
+            patient.BloodType = validBlood;
 
         using var transaction = _context.Database.BeginTransaction();
         try

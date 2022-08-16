@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiMedicalClinicEx.Server.Context.Model;
 
@@ -15,7 +16,9 @@ public class Patient
     [Required]
     public DateTime? DateCreate { get; set; } = DateTime.Now;
 
-    // nullable
     [StringLength(3)]
+    [ForeignKey(nameof(BloodTypeFk))]
     public string? BloodType { get; set; }
+
+    public BloodType? BloodTypeFk { get; set; }
 }
