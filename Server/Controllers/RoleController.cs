@@ -5,6 +5,7 @@ using ApiMedicalClinicEx.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
@@ -39,10 +40,11 @@ public class PolicyController : ControllerBase
         }
     }
 
+    [EnableQuery]
     [HttpGet("Role")]
-    public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
+    public async Task<ActionResult<IQueryable<Role>>> GetRoles()
     {
-        return await _roleManager.Roles.ToListAsync();
+        return Ok((await _roleManager.Roles.ToListAsync()).AsQueryable());
     }
 
     [HttpDelete("Role")]

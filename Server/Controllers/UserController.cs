@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ApiMedicalClinicEx.Server.Attributes;
 using ApiMedicalClinicEx.Server.Services;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -20,11 +21,12 @@ public class UserController : ControllerBase
 
     #region Users Emails
 
+    [EnableQuery]
     [HttpGet, ClaimsAuthorize(ClaimTypeService.Acess, "viewUsers")]
-    public async Task<ActionResult<IEnumerable<string>>> GetUsersEmail()
+    public async Task<ActionResult<IQueryable<string>>> GetUsersEmail()
     {
         return Ok(
-            (await _userManager.Users.ToListAsync()).Select(s => s.Email)
+            (await _userManager.Users.ToListAsync()).Select(s => s.Email).AsQueryable()
         );
     }
 
@@ -66,15 +68,16 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    [EnableQuery]
     [HttpGet("Role")]
-    public async Task<ActionResult<IEnumerable<string>>> GetUserRoles([FromQuery] int userId)
+    public async Task<ActionResult<IQueryable<string>>> GetUserRoles([FromQuery] int userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user is null)
             return NotFound("Usuário não encontrado.");
 
-        return (await _userManager.GetRolesAsync(user)).ToList();
+        return Ok((await _userManager.GetRolesAsync(user)).AsQueryable());
     }
 
     #endregion

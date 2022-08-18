@@ -5,6 +5,7 @@ using ApiMedicalClinicEx.Server.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -20,13 +21,14 @@ public class AppointmentController : ControllerBase
         _mapper = mapper;
     }
 
+    [EnableQuery]
     [HttpGet("Doctor/{idDoctor}")]
-    public async Task<ActionResult<AppointmentModel>> GetAppointmentsDoctor(string idDoctor)
+    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsDoctor(string idDoctor)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsDoctorAsync(idDoctor))
+                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsDoctorAsync(idDoctor)).AsQueryable()
             );
         }
         catch
@@ -35,13 +37,14 @@ public class AppointmentController : ControllerBase
         }
     }
 
+    [EnableQuery]
     [HttpGet("Patient/{cpfPatient}")]
-    public async Task<ActionResult<AppointmentModel>> GetAppointmentsPatient(string cpfPatient)
+    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsPatient(string cpfPatient)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsPatientAsync(cpfPatient))
+                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsPatientAsync(cpfPatient)).AsQueryable()
             );
         }
         catch
@@ -50,13 +53,14 @@ public class AppointmentController : ControllerBase
         }
     }
 
+    [EnableQuery]
     [HttpGet("Date/{cpfPatient:datetime}")]
-    public async Task<ActionResult<AppointmentModel>> GetAppointmentsAfterDate(DateTime date)
+    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsAfterDate(DateTime date)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsAfterDateAsync(date))
+                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsAfterDateAsync(date)).AsQueryable()
             );
         }
         catch

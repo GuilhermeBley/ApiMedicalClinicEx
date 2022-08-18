@@ -6,6 +6,7 @@ using ApiMedicalClinicEx.Server.Services.Exceptions;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace ApiMedicalClinicEx.Server.Controllers;
 
@@ -23,8 +24,9 @@ public class PatientController : ControllerBase
 
     #region Patient
 
+    [EnableQuery]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<PatientModel>>> GetPatients()
+    public async Task<ActionResult<IQueryable<PatientModel>>> GetPatients()
     {
         IEnumerable<PatientModel> response;
 
@@ -32,7 +34,7 @@ public class PatientController : ControllerBase
         {
             response = _mapper.Map<IEnumerable<PatientModel>>(
                 await _patientService.GetPatientsAsync()
-            );
+            ).AsQueryable();
         }
         catch
         {
@@ -127,8 +129,9 @@ public class PatientController : ControllerBase
 
     #region  Allergy
 
+    [EnableQuery]
     [HttpGet("Allergy/{cpf}")]
-    public async Task<ActionResult<IEnumerable<PatientAllergyModel>>> GetAllergys(string cpf)
+    public async Task<ActionResult<IQueryable<PatientAllergyModel>>> GetAllergys(string cpf)
     {
         try
         {
@@ -138,7 +141,7 @@ public class PatientController : ControllerBase
                 return NotFound($"Paciente com CPF {cpf} não encontrado.");
 
             return Ok(
-                    _mapper.Map<IEnumerable<PatientAllergyModel>>(await _patientService.GetAllergysAsync(cpf))
+                    _mapper.Map<IEnumerable<PatientAllergyModel>>(await _patientService.GetAllergysAsync(cpf)).AsQueryable()
                 );
         }
         catch (ServicesException e)
