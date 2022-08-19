@@ -178,7 +178,7 @@ public class PatientController : ControllerBase
         return Created($"Allergy/{model.Cpf!}", model);
     }
 
-    [HttpPost("Allergy/{cpf}/{desc}")]
+    [HttpDelete("Allergy/{cpf}/{desc}")]
     public async Task<ActionResult> DeleteAllergy(string cpf, string desc)
     {
         try
