@@ -27,32 +27,31 @@ internal class CurrentlyUserService : ICurrentlyUserService
     public CurrentlyUserModel GetUser()
     {
         string token = ((string)_contextAcessor.HttpContext!.Request.Headers.Authorization).Replace(JwtBearerDefaults.AuthenticationScheme+" ","");
-            token = ((string)_contextAcessor.HttpContext.Request.Headers.Authorization).Replace(JwtBearerDefaults.AuthenticationScheme.ToLower()+" ","");
             
-            if (string.IsNullOrEmpty(token))
-                return EmptyUser;
+        if (string.IsNullOrEmpty(token))
+            return EmptyUser;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
 
-            if (!tokenHandler.CanReadToken(token))
-            {
-                return EmptyUser;
-            }
+        if (!tokenHandler.CanReadToken(token))
+        {
+            return EmptyUser;
+        }
 
-            var claims = tokenHandler.ReadJwtToken(token).Claims;
+        var claims = tokenHandler.ReadJwtToken(token).Claims;
 
-            var name = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Name);
-            var email = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Email);
-            var medicId = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.UniqueName);
-            var identificador = int.TryParse(claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.NameId)?.Value, out int userId);
-            var phoneNumber = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.MobilePhone);
+        var name = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Name);
+        var email = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.Email);
+        var medicId = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.UniqueName);
+        var identificador = int.TryParse(claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.NameId)?.Value, out int userId);
+        var phoneNumber = claims.FirstOrDefault(predicate => predicate.Type == ClaimTypeService.MobilePhone);
 
-            return new CurrentlyUserModel
-            {
-                MedicalId = medicId is null ? "" : medicId.Value,
-                Email = email is null ? "" : email.Value,
-                PhoneNumber = phoneNumber is null ? "" : phoneNumber.Value,
-                UserId = identificador is false ? -1 : userId
-            };
+        return new CurrentlyUserModel
+        {
+            MedicalId = medicId is null ? "" : medicId.Value,
+            Email = email is null ? "" : email.Value,
+            PhoneNumber = phoneNumber is null ? "" : phoneNumber.Value,
+            UserId = identificador is false ? -1 : userId
+        };
     }
 }

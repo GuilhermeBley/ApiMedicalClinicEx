@@ -82,7 +82,7 @@ public class AppointmentController : ControllerBase
         }
         catch
         {
-            return BadRequest("Falha ao inserir nova consulta média.");
+            return BadRequest("Falha ao inserir nova consulta médica.");
         }
 
         return Created($"Patient/{model.Patient}", model);
@@ -101,7 +101,7 @@ public class AppointmentController : ControllerBase
         }
         catch
         {
-            return BadRequest("Falha ao inserir nova consulta média.");
+            return BadRequest("Falha ao inserir nova consulta médica.");
         }
 
         return Ok();
@@ -120,7 +120,7 @@ public class AppointmentController : ControllerBase
         }
         catch
         {
-            return BadRequest("Falha ao inserir nova consulta média.");
+            return BadRequest("Falha ao inserir nova consulta médica.");
         }
 
         return Ok();
