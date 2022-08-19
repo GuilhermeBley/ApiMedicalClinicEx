@@ -1,7 +1,7 @@
 # API CONTROLLER 
 
 Use concepts of:
-- RestFull
+- Restful
 - DI
 - AutoMapper
 - Use Cors
