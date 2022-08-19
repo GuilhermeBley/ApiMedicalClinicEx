@@ -15,7 +15,7 @@ public interface IAppointmentService
     /// </summary>
     /// <param name="idDoctor">identifier doctor</param>
     /// <returns>list of appointment</returns>
-    Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(string idDoctor);
+    Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(int idUser);
 
     /// <summary>
     /// Get patient Appointments
@@ -99,9 +99,9 @@ public class AppointmentService : IAppointmentService
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(string idDoctor)
+    public async Task<IEnumerable<Appointment>> GetAppointmentsDoctorAsync(int idUser)
     {
-        return (await _context.Appointments.AsNoTracking().ToListAsync()).Where(appointment => appointment.Medic.Equals(idDoctor));
+        return (await _context.Appointments.AsNoTracking().ToListAsync()).Where(appointment => appointment.Medic.Equals(idUser));
     }
 
     /// <inheritdoc/>

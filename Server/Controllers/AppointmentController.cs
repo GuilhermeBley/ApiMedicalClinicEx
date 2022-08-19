@@ -22,8 +22,8 @@ public class AppointmentController : ControllerBase
     }
 
     [EnableQuery]
-    [HttpGet("Doctor/{idDoctor}")]
-    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsDoctor(string idDoctor)
+    [HttpGet("Doctor/{idDoctor:int}")]
+    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsDoctor(int idDoctor)
     {
         try
         {
