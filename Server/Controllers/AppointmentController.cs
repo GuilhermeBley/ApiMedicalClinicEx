@@ -101,7 +101,7 @@ public class AppointmentController : ControllerBase
         }
         catch
         {
-            return BadRequest("Falha ao inserir nova consulta médica.");
+            return BadRequest("Falha ao atualizar consulta médica.");
         }
 
         return Ok();
@@ -120,7 +120,7 @@ public class AppointmentController : ControllerBase
         }
         catch
         {
-            return BadRequest("Falha ao inserir nova consulta médica.");
+            return BadRequest("Falha ao excluir consulta médica.");
         }
 
         return Ok();

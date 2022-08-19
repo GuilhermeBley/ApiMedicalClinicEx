@@ -114,20 +114,29 @@ public class AppointmentService : IAppointmentService
     /// <exception cref="NotFoundException"></exception>
     public async Task RemoveAppointmentAsync(int idAppointment)
     {
-        var appointment = await _context.Appointments.FirstOrDefaultAsync(f => f.Id == idAppointment);
+        var appointmentToDelete = await _context.Appointments.FirstOrDefaultAsync(f => f.Id == idAppointment);
 
-        if (appointment is null)
+        if (appointmentToDelete is null)
             throw new NotFoundException($"Id {idAppointment}");
+        
+        var dendentAppointments = await GetAllRelatedTo(appointmentToDelete.Id);
+        if (dendentAppointments.Any())
+        {
+            throw new BusinessRulesException(
+                $"Existem agendamentos médicos relacionados à esse, remova a seguinte lista de Id => " +
+                $"[{string.Join(',', dendentAppointments.Select(appo => appo.Id))}] para remover este."
+            );
+        }
 
         var medicUser = _userService.GetUser();
 
-        if (!appointment.Medic.Equals(medicUser.UserId))
+        if (!appointmentToDelete.Medic.Equals(medicUser.UserId))
             throw new BusinessRulesException($"O usuário só deve poder remover a consulta que ele criou.");
 
         using var transaction = _context.Database.BeginTransaction();
         try
         {
-            _context.Entry(appointment).State = EntityState.Deleted;
+            _context.Entry(appointmentToDelete).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
             transaction.Commit();
@@ -202,5 +211,15 @@ public class AppointmentService : IAppointmentService
         {
             throw new NotFoundException($"Última consulta com identificador {appointment.LastAppo} inexistente.");
         }
+    }
+
+    /// <summary>
+    /// Get all appointments related a itself with id <paramref name="id"/>
+    /// </summary>
+    /// <param name="id">Id to search</param>
+    /// <returns>enumerable of appointment or empty</returns>
+    private async Task<IEnumerable<Appointment>> GetAllRelatedTo(int id)
+    {
+        return await _context.Appointments.Where(appo => appo.LastAppo.Equals(id)).ToListAsync();
     }
 }
