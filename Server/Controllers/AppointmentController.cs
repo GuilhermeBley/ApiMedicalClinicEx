@@ -23,12 +23,12 @@ public class AppointmentController : ControllerBase
 
     [EnableQuery]
     [HttpGet("Doctor/{idDoctor:int}")]
-    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsDoctor(int idDoctor)
+    public async Task<ActionResult<IQueryable<AppointmentResponseModel>>> GetAppointmentsDoctor(int idDoctor)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsDoctorAsync(idDoctor)).AsQueryable()
+                _mapper.Map<IEnumerable<AppointmentResponseModel>>(await _appointService.GetAppointmentsDoctorAsync(idDoctor)).AsQueryable()
             );
         }
         catch
@@ -39,12 +39,12 @@ public class AppointmentController : ControllerBase
 
     [EnableQuery]
     [HttpGet("Patient/{cpfPatient}")]
-    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsPatient(string cpfPatient)
+    public async Task<ActionResult<IQueryable<AppointmentResponseModel>>> GetAppointmentsPatient(string cpfPatient)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsPatientAsync(cpfPatient)).AsQueryable()
+                _mapper.Map<IEnumerable<AppointmentResponseModel>>(await _appointService.GetAppointmentsPatientAsync(cpfPatient)).AsQueryable()
             );
         }
         catch
@@ -55,12 +55,12 @@ public class AppointmentController : ControllerBase
 
     [EnableQuery]
     [HttpGet("Date/{cpfPatient:datetime}")]
-    public async Task<ActionResult<IQueryable<AppointmentModel>>> GetAppointmentsAfterDate(DateTime date)
+    public async Task<ActionResult<IQueryable<AppointmentResponseModel>>> GetAppointmentsAfterDate(DateTime date)
     {
         try
         {
             return Ok(
-                _mapper.Map<IEnumerable<AppointmentModel>>(await _appointService.GetAppointmentsAfterDateAsync(date)).AsQueryable()
+                _mapper.Map<IEnumerable<AppointmentResponseModel>>(await _appointService.GetAppointmentsAfterDateAsync(date)).AsQueryable()
             );
         }
         catch
